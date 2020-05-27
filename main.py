@@ -38,7 +38,7 @@ def extrage_mutari(text):
 text = ''
 player = 0
 f = open(f"input.txt", "r", encoding='utf8')
-o = open(f"output.txt", "w", encoding='utf8')
+o = open(f"moves_output.txt", "w", encoding='utf8')
 text = f.read()
 f.close()
 text1 = re.split('(( ){2,})', text)
@@ -78,19 +78,41 @@ for expr in text1:
 			o.write('\n')
 			player = (player + 1) % 2
 o.close()
-o = open(f"output.txt", "r", encoding='utf8')
+o = open(f"moves_output.txt", "r", encoding='utf8')
 text=o.read()
 o.close()
-f = open(f"output.txt", "w", encoding='utf8')
+f = open(f"moves_output.txt", "w", encoding='utf8')
+o = open(f"rules_output.txt", "w", encoding='utf8')
 f.truncate(0)
 text1=text.split('\n')
 for line in text1:
 	elem = line.split(',')
-	if(elem[-1] == "1"):
-		elem[0] = str(25 - int(elem[0]))
-		elem[1] = str(25 - int(elem[1]))
-	sep = ","
-	fin = sep.join(elem)
-	f.write(fin+'\n')
-f.close()
+	if len(elem) > 1:
+		if(elem[-1] == "1"):
+			elem[0] = str(25 - int(elem[0]))
+			elem[1] = str(25 - int(elem[1]))
+		sep = ","
+		fin = sep.join(elem)
+		if (elem[-1] == "1"):
+			rule = "move([A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,A13,A14,A15,A16,A17,A18,A19,A20,A21,A22,A23,A24,A25,A26,A27,A28,A29]," \
+		+ fin + \
+		",[A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12N,A13,A14,A15N,A16,A17,A18,A19,A20,A21,A22,A23,A24,A25,A26,A27,A28,A29N])\
+		:-\
+		A" + elem[0] + "N is A" + elem[0] + " - 1,\
+		A" + elem[1] + "N is A" + elem[1] + " + 1,\
+		A29N is " + elem[2] + "1."
+		else:
+			rule = "move([A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,A13,A14,A15,A16,A17,A18,A19,A20,A21,A22,A23,A24,A25,A26,A27,A28,A29]," \
+		+ fin + \
+		",[A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12N,A13,A14,A15N,A16,A17,A18,A19,A20,A21,A22,A23,A24,A25,A26,A27,A28,A29N])\
+		:-\
+		A" + elem[0] + "N is A" + elem[0] + " + 1,\
+		A" + elem[1] + "N is A" + elem[1] + " - 1,\
+		A29N is " + elem[2] + "1."
 
+		f.write(fin+'\n')
+		#print(rule,'\n')
+		o.write(rule)
+		o.write('\n')
+f.close()
+o.close()
