@@ -1,6 +1,4 @@
-<div class="notebook">
 
-<div class="nb-cell program" name="p1">
 clone(X,X1):-X1 is X.
 printt(0, _) :- !.
 printt(_, []).
@@ -31,10 +29,3 @@ main :-
     write(L4).
     
     
-</div>
-
-<div class="nb-cell query" name="q1">
-
-</div>
-
-</div>
